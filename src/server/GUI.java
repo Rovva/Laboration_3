@@ -21,6 +21,8 @@ public class GUI extends Observable implements Observer {
 	int x_size = 1050, y_size = 1050;
 	
 	public GUI(Server server, Board board) {
+		this.board = board;
+		
 		frame = new JFrame("Color changer");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(x_size, y_size);

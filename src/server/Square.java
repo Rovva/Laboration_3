@@ -1,7 +1,5 @@
 package server;
 
-import java.awt.Point;
-
 public class Square {
 	
 	int color = 0;

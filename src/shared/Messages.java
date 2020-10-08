@@ -1,5 +1,6 @@
 package shared;
 
-public class Messages {
-
+public enum Messages {
+	CHANGE,
+	RESET
 }

@@ -30,18 +30,29 @@ public class Board extends JPanel implements Observer {
 			this.setMinimumSize(d);
 			this.setPreferredSize(d);
 			this.setMaximumSize(d);
-			this.setBackground(Color.BLACK);
+			this.setBackground(Color.WHITE);
 			this.setVisible(true);
 		}
 		
-		public int getSquare(int x, int y) {
+		public int getSquareColor(int x, int y) {
 			return map[x][y].getColor();
 		}
 		
-		public void setSquare(int x, int y, int color) {
+		public void setSquareColor(int x, int y, int color) {
 			map[x][y].setColor(color);
+			System.out.println("Color " + color + " set at " + x + " " + y);
 		}
-
+		
+		public void resetSquares() {
+			for(int i = 0; i < this.boardXSize; i++) {
+				System.out.println("i: " + i);
+				for(int j = 0; j < this.boardYSize; j++) {
+					System.out.println("Reseting " + i + " " + j);
+					this.setSquareColor(i, j, 0);
+				}
+			}
+		}
+		
 		@Override
 		public void update(Observable arg0, Object arg1) {
 			// TODO Auto-generated method stub
@@ -53,13 +64,36 @@ public class Board extends JPanel implements Observer {
 			paintSquares(g);
 		}
 		
+		private Color determineColor(int color) {
+			if(color == 0) {
+				return Color.WHITE;
+			} else if(color == 1) {
+				return Color.MAGENTA;
+			} else if(color == 2) {
+				return Color.PINK;
+			} else if(color == 3) {
+				return Color.BLACK;
+			} else if(color == 4) {
+				return Color.BLUE;
+			} else if(color == 5) {
+				return Color.RED;
+			} else if(color == 6) {
+				return Color.GREEN;
+			} else if(color == 7) {
+				return Color.YELLOW;
+			} else if(color == 8) {
+				return Color.CYAN;
+			}
+			return Color.WHITE;
+		}
+		
 		public void paintSquares(Graphics g) {
-			//g.fillOval(10, 10, 20, 20);
-			System.out.println(this.boardXSize);
 			for(int i = 0; i < this.boardXSize; i++) {
 				for(int j = 0; j < this.boardYSize; j++) {
-					g.setColor(Color.red);
-					g.fillOval((this.squareSize)*i,
+					int temp = getSquareColor(i, j);
+					Color tempColor = determineColor(temp);
+					g.setColor(tempColor);
+					g.fillRect((this.squareSize)*i,
 							(this.squareSize)*j,
 							(this.squareSize),
 							(this.squareSize));
