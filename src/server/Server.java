@@ -8,7 +8,6 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Observable;
 
-import shared.Messages;
 /**
  * @author Christoffer Rova
  * @version 1.0
