@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 
-public class GUI extends Observable implements Observer {
+public class GUI implements Observer {
 	JFrame frame;
 	JPanel panel;
 	SpringLayout layout;

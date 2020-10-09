@@ -2,7 +2,7 @@ package server;
 
 public class Square {
 	
-	int color = 0;
+	int color;
 	
 	public Square() {
 		this.color = 0;

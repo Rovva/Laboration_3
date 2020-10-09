@@ -35,11 +35,11 @@ public class Board extends JPanel implements Observer {
 		}
 		
 		public int getSquareColor(int x, int y) {
-			return map[x][y].getColor();
+			return this.map[x][y].getColor();
 		}
 		
 		public void setSquareColor(int x, int y, int color) {
-			map[x][y].setColor(color);
+			this.map[x][y].setColor(color);
 			System.out.println("Color " + color + " set at " + x + " " + y);
 		}
 		
@@ -61,26 +61,26 @@ public class Board extends JPanel implements Observer {
 		
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
-			paintSquares(g);
+			this.paintSquares(g);
 		}
 		
 		private Color determineColor(int color) {
 			if(color == 0) {
 				return Color.WHITE;
 			} else if(color == 1) {
-				return Color.MAGENTA;
-			} else if(color == 2) {
-				return Color.PINK;
-			} else if(color == 3) {
 				return Color.BLACK;
+			} else if(color == 2) {
+				return Color.RED;
+			} else if(color == 3) {
+				return Color.GREEN;
 			} else if(color == 4) {
 				return Color.BLUE;
 			} else if(color == 5) {
-				return Color.RED;
-			} else if(color == 6) {
-				return Color.GREEN;
-			} else if(color == 7) {
 				return Color.YELLOW;
+			} else if(color == 6) {
+				return Color.PINK;
+			} else if(color == 7) {
+				return Color.MAGENTA;
 			} else if(color == 8) {
 				return Color.CYAN;
 			}

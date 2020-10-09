@@ -10,6 +10,7 @@ import java.util.Observer;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
@@ -20,7 +21,11 @@ public class GUI implements Observer, ActionListener {
 	SpringLayout layout;
 	Container contentPane;
 	JTextField commandField;
-	JButton send;
+	JButton sendButton;
+	
+	JLabel changeInfo;
+	JLabel resetInfo;
+	JLabel colorInfo;
 	
 	Client client;
 	
@@ -28,56 +33,75 @@ public class GUI implements Observer, ActionListener {
 		this.client = client;
 		frame = new JFrame("Color changer");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(500, 500);
+		frame.setSize(310, 400);
 		layout = new SpringLayout();
 		contentPane = frame.getContentPane();
 		contentPane.setLayout(layout);
 		contentPane.setBackground(Color.WHITE);
 		
-		this.send = new JButton("Send");
+		this.sendButton = new JButton("Send");
 		this.commandField = new JTextField("", 20);
 		
-		this.contentPane.add(send);
+		this.contentPane.add(sendButton);
 		this.contentPane.add(commandField);
 		
-		this.send.setVisible(true);
+		this.sendButton.setVisible(true);
 		this.commandField.setVisible(true);
-		this.send.addActionListener(this);
+		this.sendButton.addActionListener(this);
 		
 		this.layout.putConstraint(SpringLayout.NORTH, commandField, 1, SpringLayout.NORTH, contentPane);
 		this.layout.putConstraint(SpringLayout.WEST, commandField, 1, SpringLayout.WEST, contentPane);
 		
-		this.layout.putConstraint(SpringLayout.NORTH, send, 1, SpringLayout.NORTH, contentPane);
-		this.layout.putConstraint(SpringLayout.WEST, send, 5, SpringLayout.EAST, commandField);
-
+		this.layout.putConstraint(SpringLayout.NORTH, sendButton, 1, SpringLayout.NORTH, contentPane);
+		this.layout.putConstraint(SpringLayout.WEST, sendButton, 5, SpringLayout.EAST, commandField);
+		
+		this.changeInfo = new JLabel("Change: 0 x y color");
+		this.resetInfo = new JLabel("Reset: 1");
+		this.colorInfo = new JLabel("<html>Colors:<br>"
+				+ "0 = Nothing<br>" + 
+				"1 = Black<br>" + 
+				"2 = Red<br>" + 
+				"3 = Green<br>" + 
+				"4 = Blue<br>" + 
+				"5 = Yellow<br>" + 
+				"6 = Pink<br>" + 
+				"7 = Magenta<br>" + 
+				"8 = Cyan</html>");
+		
+		this.contentPane.add(changeInfo);
+		this.contentPane.add(resetInfo);
+		this.contentPane.add(colorInfo);
+		
+		this.layout.putConstraint(SpringLayout.NORTH, changeInfo, 2, SpringLayout.SOUTH, commandField);
+		this.layout.putConstraint(SpringLayout.WEST, changeInfo, 1, SpringLayout.WEST, contentPane);
+		
+		this.layout.putConstraint(SpringLayout.NORTH, resetInfo, 2, SpringLayout.SOUTH, changeInfo);
+		this.layout.putConstraint(SpringLayout.WEST, resetInfo, 1, SpringLayout.WEST, contentPane);
+		
+		this.layout.putConstraint(SpringLayout.NORTH, colorInfo, 2, SpringLayout.SOUTH, resetInfo);
+		this.layout.putConstraint(SpringLayout.WEST, colorInfo, 1, SpringLayout.WEST, contentPane);
+		
+		this.changeInfo.setVisible(true);
+		this.resetInfo.setVisible(true);
+		this.colorInfo.setVisible(true);
+		
 		frame.setVisible(true);
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-
 		String op = arg0.getActionCommand();
 		if(op == "Send") {
-			String temp = commandField.getText();
-			String[] split = temp.split(" ");
-			byte[] data = new byte[4];
-			int tempint = 0;
-			if(split[0].equals("0")) {
-				tempint = Integer.valueOf(split[0]);
-				System.out.println("tempint: " + tempint);
-				data[0] = (byte) tempint;
-				tempint = Integer.valueOf(split[1]);
-				data[1] = (byte) tempint;
-				tempint = Integer.valueOf(split[2]);
-				data[2] = (byte) tempint;
-				tempint = Integer.valueOf(split[3]);
-				data[3] = (byte) tempint;
-			} else if(split[0].equals("1")) {
-				data[0] = 1;
-			}
+			String[] split = commandField.getText().split(" ");
 			try {
-				client.sendUDP(data);
+				if(split[0].equals("0")) {
+					byte data[] = {Byte.valueOf(split[0]), Byte.valueOf(split[1]),
+							Byte.valueOf(split[2]), Byte.valueOf(split[3])};
+					client.sendUDP(data);
+				} else if(split[0].equals("1")) {
+					byte data[] = {1};
+					client.sendUDP(data);
+				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -7,7 +7,7 @@ public class main {
 
 	public static void main(String[] args) throws SocketException, UnknownHostException {
 		// TODO Auto-generated method stub
-		Server test = new Server(4444);
+		Server server = new Server(4444);
 	}
 
 }
