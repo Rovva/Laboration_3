@@ -14,7 +14,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
-
+/**
+ * @author Christoffer Rova
+ * @version 1.0
+ * @date 2020-10-09
+ * This class contains all the code needed for the GUI.
+ */
 public class GUI implements Observer, ActionListener {
 	JFrame frame;
 	JPanel panel;
@@ -28,7 +33,10 @@ public class GUI implements Observer, ActionListener {
 	JLabel colorInfo;
 	
 	Client client;
-	
+	/**
+	 * GUI is the constructor that takes a client object as parameter.
+	 * @param client
+	 */
 	public GUI(Client client) {
 		this.client = client;
 		frame = new JFrame("Color changer");
@@ -87,7 +95,9 @@ public class GUI implements Observer, ActionListener {
 		
 		frame.setVisible(true);
 	}
-	
+	/**
+	 * This method manages the input generated when clicking the send button.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		String op = arg0.getActionCommand();
@@ -108,7 +118,9 @@ public class GUI implements Observer, ActionListener {
 			}
 		}
 	}
-
+	/**
+	 * This method repaints the gui.
+	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		// TODO Auto-generated method stub

@@ -9,7 +9,12 @@ import java.net.UnknownHostException;
 import java.util.Observable;
 
 import shared.Messages;
-
+/**
+ * @author Christoffer Rova
+ * @version 1.0
+ * @date 2020-10-09
+ * This class is needed for handling of GUI and communication between server and client.
+ */
 public class Server extends Observable {
 
 	Board board;
@@ -17,16 +22,27 @@ public class Server extends Observable {
 	DatagramSocket socketUDP;
 	packetReader reader;
 	Thread thread;
-	
+	/**
+	 * The constructor that creates a socket, a board object and GUI.
+	 * @param port A integer for the port number that is going to be used for the server.
+	 * @throws SocketException
+	 * @throws UnknownHostException
+	 */
 	public Server(int port) throws SocketException, UnknownHostException {
 		this.socketUDP = new DatagramSocket(port, Inet6Address.getByAddress(new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}));
 		this.board = new Board(this, 201, 201, 5);
-		this.gui = new GUI(this, this.board);
+		this.gui = new GUI(this.board);
 		reader = new packetReader(socketUDP, board);
 		thread = new Thread(reader);
 		thread.start();
 	}
 	
+	/**
+	 * packetReader is a class that will be run as a thread and its purpose is managing
+	 * the communication from client to server.
+	 * @author Christoffer Rova
+	 *
+	 */
 	public class packetReader implements Runnable {
 		
 		boolean runThread;
@@ -34,14 +50,21 @@ public class Server extends Observable {
 		DatagramSocket socketUDP;
 		DatagramPacket packetUDP;
 		byte[] dataUDP = new byte[4];
-		
+		/**
+		 * The constructor that setups all the references to objects that is needed by the thread.
+		 * @param socketUDP reference to the already created datagram socket.
+		 * @param board reference to the object that manages and store the squares.
+		 */
 		public packetReader(DatagramSocket socketUDP, Board board) {
 			this.socketUDP = socketUDP;
 			this.packetUDP = new DatagramPacket(dataUDP, dataUDP.length);
 			this.runThread = true;
 			this.board = board;
 		}
-		
+		/**
+		 * This method decides what to do with the data received.
+		 * @param data the byte array containing data.
+		 */
 		private void packetProcessor(byte[] data) {
 			if(data[0] == Messages.CHANGE.ordinal()) {
 				System.out.println("Changing color...");
@@ -59,24 +82,27 @@ public class Server extends Observable {
 		public void stopThread() {
 			this.runThread = false;
 		}
-		
+		/*
+		 * (non-Javadoc)
+		 * @see java.lang.Runnable#run()
+		 */
 		@Override
 		public void run() {
 			while(runThread) {
+				// Try to receive data from the datagram socket, otherwise give an exception.
 	            try {
 					socketUDP.receive(packetUDP);
+					dataUDP = packetUDP.getData();
+		            System.out.println(dataUDP[0] + " " + dataUDP[1] + " " + dataUDP[2] + " " + dataUDP[3]);
+		            // Send the received data to packetProcessor.
+		            this.packetProcessor(dataUDP);
+					setChanged();
+					notifyObservers();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-	            dataUDP = packetUDP.getData();
-		            System.out.println(dataUDP[0] + " " + dataUDP[1] + " " + dataUDP[2] + " " + dataUDP[3]);
-		            this.packetProcessor(dataUDP);
-					setChanged();
-					notifyObservers();
 			}
-			// TODO Auto-generated method stub
-			
 		}
 		
 	}
