@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 /**
  * @author Christoffer Rova
  * @version 1.0
- * @date 2020-10-09
+ * date 2020-10-09
  * This class is managing all the squares that can be colored on the board.
  */
 public class Board extends JPanel implements Observer {
@@ -51,9 +51,9 @@ public class Board extends JPanel implements Observer {
 		/**
 		 * This method take x and y coordinates and calls getColor() method in the Square object
 		 * and returns the color which is stored as a integer.
-		 * @param x
-		 * @param y
-		 * @return
+		 * @param x X integer coordinate.
+		 * @param y Y integer coordinate.
+		 * @return Integer representing the color.
 		 */
 		public int getSquareColor(int x, int y) {
 			return this.map[x][y].getColor();
@@ -62,9 +62,9 @@ public class Board extends JPanel implements Observer {
 		/**
 		 * setSquareColor takes x and y coordinate and a integer representing a color
 		 * and stores is in the Square object by using the objects own setColor method.
-		 * @param x
-		 * @param y
-		 * @param color
+		 * @param x X integer coordinate.
+		 * @param y Y integer coordinate.
+		 * @param color Integer representing the color.
 		 */
 		public void setSquareColor(int x, int y, int color) {
 			this.map[x][y].setColor(color);
@@ -73,7 +73,7 @@ public class Board extends JPanel implements Observer {
 		/**
 		 * resetSquares loop through all the objects stored in the array "map" and calls
 		 * the method setSquareColor that will use the Square objects own method setColor()
-		 * with the integer value 0 which represents white.
+		 * with the integer value 0 which represents white/no color.
 		 */
 		public void resetSquares() {
 			for(int i = 0; i < this.boardXSize; i++) {
@@ -127,12 +127,13 @@ public class Board extends JPanel implements Observer {
 		 * The method that is responsible for painting the squares on the board.
 		 * It loops through the array and calling the method getSquareColor() with the 
 		 * coordinates as parameters which in turn calls the method getColor() in the Square object.
+		 * 
 		 * The integer returned is then passed as a parameter to determineColor() which in turn
 		 * returns a valid Color.color which is used to set the color of the square. "fillRect"
 		 * then paints the square at the correct coordinate on the board with the correct size as
 		 * given by the variable squareSize.
 		 * 
-		 * @param g
+		 * @param g Reference to the Graphic2d object.
 		 */
 		public void paintSquares(Graphics g) {
 			for(int i = 0; i < this.boardXSize; i++) {

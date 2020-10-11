@@ -9,7 +9,7 @@ import java.util.Observable;
 /**
  * @author Christoffer Rova
  * @version 1.0
- * @date 2020-10-09
+ * date 2020-10-09
  * This is the class that handles communication to the server.
  */
 public class Client extends Observable {
@@ -19,7 +19,7 @@ public class Client extends Observable {
 	byte[] dataUDP = new byte[4];
 	/**
 	 * Client is the constructor.
-	 * @param socketUDP The datagram socket needed for communication.
+	 * @param socketUDP Reference to the datagram socket needed for communication.
 	 */
 	public Client(DatagramSocket socketUDP) {
 		this.socketUDP = socketUDP;
@@ -27,7 +27,7 @@ public class Client extends Observable {
 	/**
 	 * sendUDP is the method for sending data to the server.
 	 * @param data The byte array that will be sent to server.
-	 * @throws IOException
+	 * @throws IOException Throw a exception if unable to send packet.
 	 */
 	public void sendUDP(byte[] data) throws IOException {
 		System.out.println(Inet6Address.getByAddress(null, new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, 4444).toString());

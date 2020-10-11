@@ -12,7 +12,7 @@ import javax.swing.SpringLayout;
 /**
  * @author Christoffer Rova
  * @version 1.0
- * @date 2020-10-09
+ * date 2020-10-09
  * GUI is the class that handles the graphical interfaces which includes the 
  * object Board which in turn paints all the squares in the gui.
  */
@@ -49,7 +49,6 @@ public class GUI implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
 		frame.repaint();
 	}
 }

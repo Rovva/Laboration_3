@@ -17,7 +17,7 @@ import javax.swing.SpringLayout;
 /**
  * @author Christoffer Rova
  * @version 1.0
- * @date 2020-10-09
+ * date 2020-10-09
  * This class contains all the code needed for the GUI.
  */
 public class GUI implements Observer, ActionListener {
@@ -34,8 +34,9 @@ public class GUI implements Observer, ActionListener {
 	
 	Client client;
 	/**
-	 * GUI is the constructor that takes a client object as parameter.
-	 * @param client
+	 * GUI is the constructor that takes a reference to the client object as parameter
+	 * and setups all the objects needed to display a GUI.
+	 * @param client The reference to client object.
 	 */
 	public GUI(Client client) {
 		this.client = client;

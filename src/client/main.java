@@ -7,7 +7,7 @@ import java.net.UnknownHostException;
 /**
  * @author Christoffer Rova
  * @version 1.0
- * @date 2020-10-09
+ * date 2020-10-09
  * The class needed to start the client GUI.
  */
 public class main {
